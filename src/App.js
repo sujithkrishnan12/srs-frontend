@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const response = await fetch('http://localhost:5000/generate-srs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        project_name: projectName,
+        description: projectDescription,
+        requirements: functionalRequirements.split(',')
+      })
+    });
+  
+    // ✅ Convert response to Blob (PDF)
+    const blob = await response.blob();
+  
+    // ✅ Create URL for PDF Download
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'SRS_Document.pdf';
+    a.click();
+  };
+  
