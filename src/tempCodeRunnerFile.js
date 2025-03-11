@@ -9,7 +9,7 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("https://srs-generator-flask.onrender.com/generate-srs", {
+    const response = await fetch('http://localhost:5000/generate-srs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
